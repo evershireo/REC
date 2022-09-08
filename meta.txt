@@ -1,0 +1,8 @@
+#cloud-config
+users:
+    - name: user_name
+      passwd: hash_password
+      lock_passwd: false
+      groups: sudo
+      shell: /bin/bash
+      
