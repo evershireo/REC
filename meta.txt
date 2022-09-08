@@ -1,7 +1,7 @@
 #cloud-config
 users:
-    - name: user_name
-      passwd: hash_password
+    - name: sysadmin
+      passwd: $6$9u0wIEip/TeWqK.U$cEym53HxIWfJoncG3SNXEUc3IFcyF/YTdKzmdqiT2jqEgU/CO7IpzkD7ICYCnrV/s/UT9o7Q/bEXkwbHQsHWn.
       lock_passwd: false
       groups: sudo
       shell: /bin/bash
