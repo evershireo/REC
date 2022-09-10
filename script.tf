@@ -8,9 +8,9 @@ terraform {
 }
 
 provider "yandex" {
-  token     = "YOUR TOKEN"
-  cloud_id  = "YOUR CLOUD"
-  folder_id = "YOUR FOLDER"
+  token     = "YOUR_TOKEN"
+  cloud_id  = "YOUR_CLOUD"
+  folder_id = "YOUR_FOLDER"
   zone      = "ru-central1-a"
 }
 
@@ -19,7 +19,7 @@ provider "yandex" {
 resource "yandex_vpc_network" "net1" {
   name = "net1"
   labels = {
-    "to" = "cml"
+    "cmlinstance" = "1"
   }
 }
 
@@ -28,23 +28,22 @@ resource "yandex_vpc_subnet" "subnet1" {
     network_id = "${yandex_vpc_network.net1.id}"
     v4_cidr_blocks = ["10.1.0.0/24"]
       labels = {
-    "to" = "cml"
+    "cmlinstance" = "1"
   }
 }
 
 resource "yandex_compute_instance" "cml" {
   name = "cml"
-  hostname = "cml"
   platform_id = "standard-v3"
   boot_disk {
       initialize_params {
-        image_id = "fd81e1d53tn2c6gnsqtt"
+        image_id = "fd8dgd53le1aj6gul69o"
         size = 32
       }
     }
 
     labels = {
-    "to" = "cml"
+    "cmlinstance" = "1"
   }
   network_interface {
       subnet_id = "${yandex_vpc_subnet.subnet1.id}"
@@ -60,8 +59,20 @@ resource "yandex_compute_instance" "cml" {
       
     }
 
-
-output "connect_ip" {
-  value = "${yandex_compute_instance.cml.network_interface[0].nat_ip_address}"
 }
 
+
+output "connect_ip" {
+  value = "https://${yandex_compute_instance.cml.network_interface[0].nat_ip_address}"
+}
+
+
+output "cml_username" {
+  value =  "admin"
+  
+}
+
+output "cml_password" {
+  value = "P@ssw0rd"
+  
+}
